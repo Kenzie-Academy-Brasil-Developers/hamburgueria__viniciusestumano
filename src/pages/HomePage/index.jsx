@@ -1,16 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CartModal } from "../../components/CartModal";
 import { Header } from "../../components/Header";
 import { ProductList } from "../../components/ProductList";
+import { hamburgueriaApi } from "../../services/api";
 
-export const HomePage = () => {
-   const [productList, setProductList] = useState([]);   
+export const HomePage = ({ setVisible }) => {
+   const [productList, setProductList] = useState([]);
+   
+   useEffect(() => {
+      const fetchProducts = async () => {
+         try {
+            const { data } = await hamburgueriaApi.get("/products");
+            setProductList(data);
+         } catch (error) {
+            console.log("Erro ao buscar o produto.");
+            console.log(error.message);
+         }
+      };
+
+      fetchProducts();
+
+   }, []);
 
    return (
       <>
          <Header />
          <main>
-            <ProductList productList={productList} />
+            <ProductList productList={productList} setVisible={setVisible} />
          </main>
       </>
    );

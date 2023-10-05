@@ -8,7 +8,7 @@ export const Header = () => {
          <img src={Logo} alt="Logo Kenzie Burguer" />
          <button>
             <MdShoppingCart size={21} />
-            <span>0</span>
+            <span className="heading3">0</span>
          </button>
       </header>
    );
