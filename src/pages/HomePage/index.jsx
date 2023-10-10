@@ -4,7 +4,7 @@ import { Header } from "../../components/Header";
 import { ProductList } from "../../components/ProductList";
 import { hamburgueriaApi } from "../../services/api";
 
-export const HomePage = ({ setVisible }) => {
+export const HomePage = ({ setVisible, addProduct }) => {
    const [productList, setProductList] = useState([]);
    
    useEffect(() => {
@@ -21,12 +21,12 @@ export const HomePage = ({ setVisible }) => {
       fetchProducts();
 
    }, []);
-
+   
    return (
       <>
-         <Header />
+         <Header setVisible={setVisible}/>
          <main>
-            <ProductList productList={productList} setVisible={setVisible} />
+            <ProductList productList={productList} addProduct={addProduct}/>
          </main>
       </>
    );

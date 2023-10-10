@@ -1,0 +1,123 @@
+@media (max-width: 940px){
+    .cart__container {
+        display: flex;
+        flex-direction: column;
+
+        width: 397px;
+        height: 408px;
+        gap: 10px;
+        margin: 0px 0px 0px 10px;
+
+    }
+
+    .cart__titleClose{
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 397px;
+        height: 57px;
+        padding: 14px 14px;
+
+        color: var(--grey-text-button);
+        background-color: var(--color-primary);
+        border-radius: 8px 8px 0px 0px ;
+    }
+
+    .list__itens {
+        width: 397px; 
+        height: 200px; 
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .total__value{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+
+    span {
+        color: var(--grey-300);
+    }
+
+    .valueButton__container{
+        display: flex;
+        flex-direction: column;
+
+        gap: 20px;
+        width: 368px;
+        height: 121px;
+        margin: 0px 15px 18px 15px;
+    }
+    .closeButton{
+        color: var(--grey-300);
+    }
+
+}
+
+@media (min-width: 930px){
+    .cart__container {
+        display: flex;
+        flex-direction: column;
+
+        width: 484px;
+        height: 408px;
+        gap: 10px;
+        margin: 0px 0px 0px 10px;
+
+    }
+
+    .cart__titleClose{
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 397px;
+        height: 57px;
+        padding: 14px 14px;
+
+        color: var(--grey-text-button);
+        background-color: var(--color-primary);
+        border-radius: 8px 8px 0px 0px ;
+    }
+
+    .list__itens {
+        width: 397px; 
+        height: 200px; 
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .total__value{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+
+    span {
+        color: var(--grey-300);
+    }
+    
+    .valueButton__container{
+        display: flex;
+        flex-direction: column;
+
+        gap: 20px;
+        width: 368px;
+        height: 121px;
+        margin: 0px 15px 18px 15px;
+    }
+    .closeButton{
+        color: var(--grey-300);
+    }
+
+}
+
+

@@ -3,30 +3,23 @@ import { CartModal } from "./components/CartModal";
 import { HomePage } from "./pages/HomePage";
 import "./styles/index.scss";
 import { hamburgueriaApi } from "./services/api";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [cartList, setCartList] = useState([]);
   const [isVisible , setVisible] = useState(false);
 
-  useEffect(() => {
-    const fetchCarts = async () => {
-       try {
-          const { data } = await hamburgueriaApi.get("/products");
-          setCartList(data);
-       } catch (error) {
-          console.log("Erro ao renderizar o produto.");
-          console.log(error.message);
-       }
-    };
-
-    fetchCarts();
-
- }, []);
+ const addProduct = (productToAdd) => {
+  setCartList([...cartList, productToAdd]);
+  toast.success("Produto adicionado ao carrinho.");
+}
 
   return (
     <>
-      <HomePage setVisible={setVisible} />
+      <HomePage setVisible={setVisible} addProduct={addProduct}/>
       {isVisible ? <CartModal cartList={cartList} setVisible={setVisible} /> : null}
+      <ToastContainer position="bottom-right" />
     </>
   )
 }
