@@ -2,7 +2,7 @@ import { MdClose } from "react-icons/md";
 import { CartItemCard } from "./CartItemCard";
 import style from "./index.module.scss";
 
-export const CartModal = ({ cartList, setVisible }) => {
+export const CartModal = ({ cartList, setVisible, removeProduct, clearAllProducts }) => {
    const total = cartList.reduce((prevValue, product) => {
       return prevValue + product.price;
    }, 0);
@@ -18,7 +18,7 @@ export const CartModal = ({ cartList, setVisible }) => {
          <div>
             <ul className={style.list__itens}>
                {cartList.map((product) => (
-                  <CartItemCard key={product.id} product={product} />
+                  <CartItemCard key={product.id} product={product} removeProduct={removeProduct} />
                ))}
             </ul>
          </div>
@@ -27,7 +27,7 @@ export const CartModal = ({ cartList, setVisible }) => {
                <span className="heading3">Total</span>
                <span>{total.toLocaleString('pt-BR', { style: "currency", currency: "BRL"})}</span>
             </div>
-            <button className="button__removeAll">Remover todos</button>
+            <button className="button__removeAll" onClick={clearAllProducts}>Remover todos</button>
          </div>
       </div>
    );

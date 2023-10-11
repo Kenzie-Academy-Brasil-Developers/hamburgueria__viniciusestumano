@@ -4,9 +4,9 @@ import { Header } from "../../components/Header";
 import { ProductList } from "../../components/ProductList";
 import { hamburgueriaApi } from "../../services/api";
 
-export const HomePage = ({ setVisible, addProduct }) => {
+export const HomePage = ({ setVisible, addProduct, cartList }) => {
    const [productList, setProductList] = useState([]);
-   
+
    useEffect(() => {
       const fetchProducts = async () => {
          try {
@@ -21,12 +21,16 @@ export const HomePage = ({ setVisible, addProduct }) => {
       fetchProducts();
 
    }, []);
-   
+
    return (
       <>
-         <Header setVisible={setVisible}/>
+         <Header
+            setVisible={setVisible}
+            cartList={cartList}
+         />
+
          <main>
-            <ProductList productList={productList} addProduct={addProduct}/>
+            <ProductList productList={productList} addProduct={addProduct} />
          </main>
       </>
    );
