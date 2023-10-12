@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { CartModal } from "./components/CartModal";
 import { HomePage } from "./pages/HomePage";
 import "./styles/index.scss";
-import { hamburgueriaApi } from "./services/api";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,20 +9,75 @@ function App() {
   const [cartList, setCartList] = useState([]);
   const [isVisible, setVisible] = useState(false);
 
+  useEffect(() => {
+    const savedCartList = localStorage.getItem("cartList");
+
+    if (savedCartList) {
+      setCartList(JSON.parse(savedCartList));
+
+    }
+  }, []);
+
   const addProduct = (productToAdd) => {
-    setCartList([...cartList, productToAdd]);
+    const existingProduct = cartList.find(item => item.id === productToAdd.id);
+
+    if (existingProduct) {
+      const updatedCartList = cartList.map(item => {
+        if (item.id === productToAdd.id) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      });
+      setCartList(updatedCartList);
+    } else {
+      setCartList([...cartList, { ...productToAdd, quantity: 1 }]);
+    }
+
     toast.success("Produto adicionado ao carrinho.");
+    localStorage.setItem("cartList", JSON.stringify(cartList));
+
   }
 
   const removeProduct = (productToRemove) => {
-    const updatedCartList = cartList.filter((product) => product !== productToRemove);
-    setCartList(updatedCartList);
+    const existingProduct = cartList.find(item => item.id === productToRemove.id);
+
+    if (existingProduct && existingProduct.quantity > 1) {
+      const updatedCartList = cartList.map(item => {
+        if (item.id === productToRemove.id) {
+          return { ...item, quantity: item.quantity - 1 };
+
+        }
+        return item;
+
+      });
+      setCartList(updatedCartList);
+
+    } else {
+      const updatedCartList = cartList.filter(item => item.id !== productToRemove.id);
+      setCartList(updatedCartList);
+      
+      const updatedLocalStorageCart = JSON.parse(localStorage.getItem("cartList"));
+      const updatedCartIndex = updatedLocalStorageCart.findIndex(item => item.id === productToRemove.id);
+  
+      if (updatedCartIndex !== -1) {
+        updatedLocalStorageCart.splice(updatedCartIndex, 1);
+        localStorage.setItem("cartList", JSON.stringify(updatedLocalStorageCart));
+
+      }
+    }
+  
     toast.error("Produto removido do carrinho.");
+
+  }
+
+  const calculateTotal = () => {
+    return cartList.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 
   const clearAllProducts = () => {
     setCartList([]);
     toast.error("Todos os produtos foram removidos do carrinho.");
+    localStorage.removeItem("cartList");
   }
 
   return (
@@ -38,7 +92,8 @@ function App() {
       cartList={cartList} 
       setVisible={setVisible} 
       removeProduct={removeProduct}
-      clearAllProducts={clearAllProducts} 
+      clearAllProducts={clearAllProducts}
+      calculateTotal={calculateTotal()} 
       /> : null}
       <ToastContainer position="bottom-right" />
     </>
